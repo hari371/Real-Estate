@@ -1,0 +1,4 @@
+admin 1 :-
+    email - test@gmail.com 
+    pass - 12345 
+    jwt - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhYmI4YWExYjUyNDg2ZTk0NjM5Mzc5OSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc5MDY3NTc1MywiZXhwIjoxNzkwNzYyMTUzfQ.pZQloer_BBs-yeg4g0jc5ny2SleExM_obROg8ElD4VY
