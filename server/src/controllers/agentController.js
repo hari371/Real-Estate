@@ -14,26 +14,31 @@ const createAgent = async (req, res) => {
 			!name ||
 			!email ||
 			!phone ||
-			!description ||
-			!req.file
+			!description
 		) {
 			return res.status(400).json({
-				message: "All fields and agent image are required"
+				message: "All fields are required"
 			});
 		}
 
-		const uploadResult = await uploadToCloudinary(
-			req.file.buffer,
-			"real-estate/agents"
-		);
+		let image = "";
 
-		const agent = await Agent.create({
-			name,
-			email,
-			phone,
-			description,
-			image: uploadResult.secure_url
-		});
+        if (req.file) {
+            const uploadResult = await uploadToCloudinary(
+                req.file.buffer,
+                "real-estate/agents"
+            );
+
+            image = uploadResult.secure_url;
+        }
+
+        const agent = await Agent.create({
+            name,
+            email,
+            phone,
+            description,
+            image
+        });
 
 		res.status(201).json({
 			message: "Agent created successfully",
