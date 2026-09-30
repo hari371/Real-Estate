@@ -9,16 +9,20 @@ const {
 } = require("../controllers/blogController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const adminMiddleware = require("../middleware/adminMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
+// Public routes
 router.get("/", getBlogs);
 router.get("/:id", getBlogById);
 
+// Admin routes
 router.post(
 	"/",
 	authMiddleware,
+	adminMiddleware,
 	upload.single("image"),
 	createBlog
 );
@@ -26,6 +30,7 @@ router.post(
 router.put(
 	"/:id",
 	authMiddleware,
+	adminMiddleware,
 	upload.single("image"),
 	updateBlog
 );
@@ -33,6 +38,7 @@ router.put(
 router.delete(
 	"/:id",
 	authMiddleware,
+	adminMiddleware,
 	deleteBlog
 );
 

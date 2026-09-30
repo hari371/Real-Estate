@@ -9,6 +9,7 @@ const {
 } = require("../controllers/propertyController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const adminMiddleware = require("../middleware/adminMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get("/:id", getPropertyById);
 router.post(
 	"/",
 	authMiddleware,
+	adminMiddleware,
 	upload.single("image"),
 	createProperty
 );
@@ -26,6 +28,7 @@ router.post(
 router.put(
 	"/:id",
 	authMiddleware,
+	adminMiddleware,
 	upload.single("image"),
 	updateProperty
 );
@@ -33,6 +36,7 @@ router.put(
 router.delete(
 	"/:id",
 	authMiddleware,
+	adminMiddleware,
 	deleteProperty
 );
 

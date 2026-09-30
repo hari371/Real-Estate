@@ -9,16 +9,20 @@ const {
 } = require("../controllers/agentController");
 
 const authMiddleware = require("../middleware/authMiddleware");
+const adminMiddleware = require("../middleware/adminMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
 const router = express.Router();
 
+// Public routes
 router.get("/", getAgents);
 router.get("/:id", getAgentById);
 
+// Admin routes
 router.post(
 	"/",
 	authMiddleware,
+	adminMiddleware,
 	upload.single("image"),
 	createAgent
 );
@@ -26,6 +30,7 @@ router.post(
 router.put(
 	"/:id",
 	authMiddleware,
+	adminMiddleware,
 	upload.single("image"),
 	updateAgent
 );
@@ -33,6 +38,7 @@ router.put(
 router.delete(
 	"/:id",
 	authMiddleware,
+	adminMiddleware,
 	deleteAgent
 );
 
