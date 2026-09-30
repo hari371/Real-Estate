@@ -3,8 +3,10 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/authMiddleware");
+
 const propertyRoutes = require("./routes/propertyRoutes");
 const agentRoutes = require("./routes/agentRoutes");
+const blogRoutes = require("./routes/blogRoutes");
 
 const app = express();
 
@@ -28,5 +30,6 @@ app.get("/api/auth/protected-test", authMiddleware, (req, res) => {
 
 app.use("/api/properties", propertyRoutes);
 app.use("/api/agents", agentRoutes);
+app.use("/api/blogs", blogRoutes);
 
 module.exports = app;
