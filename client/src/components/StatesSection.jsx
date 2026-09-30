@@ -1,9 +1,4 @@
-import {
-	FaCity,
-	FaBuilding,
-	FaUmbrellaBeach,
-	FaMountain
-} from "react-icons/fa";
+import { FaCity, FaBuilding, FaUmbrellaBeach, FaMountain } from "react-icons/fa";
 
 function StatesSection() {
 	const states = [
