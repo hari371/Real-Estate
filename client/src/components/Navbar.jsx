@@ -1,23 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 
 function Navbar() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setIsScrolled(window.scrollY > 50);
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 
 	const navLinkClass = ({ isActive }) =>
-		`text-sm font-medium transition ${
+		`text-sm font-medium transition ease-in-out duration-500 ${
 			isActive
-				? "text-gray-900"
-				: "text-gray-700 hover:text-gray-500"
+				? "text-primary"
+				: "text-gray-300 hover:text-secondary"
 		}`;
 
 	return (
-		<nav className="border-b border-gray-200 bg-white">
+		<nav
+			className={`sticky top-0 z-50 bg-gray-900 transition ease-in-out duration-500 ${
+				isScrolled ? "shadow-lg" : "shadow-none"
+			}`}
+		>
 			<div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
 				<Link
 					to="/"
-					className="text-2xl font-bold tracking-tight text-gray-900"
+					className="text-2xl font-bold tracking-tight text-white transition ease-in-out duration-500 hover:text-secondary"
 					onClick={() => setIsMenuOpen(false)}
 				>
 					REAL ESTATE
@@ -55,15 +72,22 @@ function Navbar() {
 
 					<a
 						href="#contact"
-						className="text-sm font-medium text-gray-700 transition hover:text-gray-500"
+						className="text-sm font-medium text-gray-300 transition ease-in-out duration-500 hover:text-secondary"
 					>
 						Contact
 					</a>
+
+					<Link
+						to="/admin"
+						className="rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-white transition ease-in-out duration-500 hover:bg-secondary"
+					>
+						Admin
+					</Link>
 				</div>
 
 				<button
 					type="button"
-					className="text-2xl text-gray-900 md:hidden"
+					className="text-2xl text-white transition ease-in-out duration-500 hover:text-secondary md:hidden"
 					onClick={() => setIsMenuOpen(!isMenuOpen)}
 					aria-label="Toggle navigation menu"
 				>
@@ -72,7 +96,7 @@ function Navbar() {
 			</div>
 
 			{isMenuOpen && (
-				<div className="border-t border-gray-100 px-6 py-5 md:hidden">
+				<div className="border-t border-gray-800 bg-gray-900 px-6 py-5 md:hidden">
 					<div className="flex flex-col gap-5">
 						<NavLink
 							to="/"
@@ -109,11 +133,19 @@ function Navbar() {
 
 						<a
 							href="#contact"
-							className="text-sm font-medium text-gray-700 transition hover:text-gray-500"
+							className="text-sm font-medium text-gray-300 transition ease-in-out duration-500 hover:text-secondary"
 							onClick={() => setIsMenuOpen(false)}
 						>
 							Contact
 						</a>
+
+						<Link
+							to="/admin"
+							className="w-fit rounded-md bg-primary px-5 py-2.5 text-sm font-semibold text-white transition ease-in-out duration-500 hover:bg-secondary"
+							onClick={() => setIsMenuOpen(false)}
+						>
+							Admin
+						</Link>
 					</div>
 				</div>
 			)}
