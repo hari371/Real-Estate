@@ -9,6 +9,10 @@ import BlogDetails from "./pages/User/BlogDetails";
 import PropertyDetails from "./pages/User/PropertyDetails";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminProperties from "./pages/Admin/AdminProperties";
+import AdminRegister from "./pages/Admin/AdminRegister";
+import AdminVerifyOtp from "./pages/Admin/AdminVerifyOtp";
+import AdminLogin from "./pages/Admin/AdminLogin";
 
 function App() {
 	return (
@@ -23,8 +27,14 @@ function App() {
 					<Route path="/blogs" element={<Blogs />} />
 					<Route path="/blogs/:id" element={<BlogDetails />} />
 				</Route>
+
+				<Route path="/admin/register" element={<AdminRegister />} />
+				<Route path="/admin/verify-otp" element={<AdminVerifyOtp />} />
+				<Route path="/admin/login" element={<AdminLogin />} />
+
 				<Route element={<AdminLayout />}>
 					<Route path="/admin" element={<AdminDashboard />} />
+					<Route path="/admin/properties" element={<AdminProperties />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
