@@ -1,20 +1,71 @@
+import { useEffect, useState } from "react";
 import { FiGrid, FiUsers, FiFileText } from "react-icons/fi";
+import { getProperties } from "../../services/propertyService";
+import { getAgents } from "../../services/agentService";
+import { getBlogs } from "../../services/blogService";
 
 function AdminDashboard() {
-	const stats = [
+	const [stats, setStats] = useState({
+		properties: 0,
+		agents: 0,
+		blogs: 0
+	});
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const loadStats = async () => {
+			try {
+				const [
+					propertiesResponse,
+					agentsResponse,
+					blogsResponse
+				] = await Promise.all([
+					getProperties(),
+					getAgents(),
+					getBlogs()
+				]);
+
+				const properties =
+					propertiesResponse.data.properties ||
+					propertiesResponse.data;
+
+				const agents =
+					agentsResponse.data.agents ||
+					agentsResponse.data;
+
+				const blogs =
+					blogsResponse.data.blogs ||
+					blogsResponse.data;
+
+				setStats({
+					properties: properties.length,
+					agents: agents.length,
+					blogs: blogs.length
+				});
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		loadStats();
+	}, []);
+
+	const statCards = [
 		{
 			title: "Properties",
-			value: "0",
+			value: stats.properties,
 			icon: <FiGrid />
 		},
 		{
 			title: "Agents",
-			value: "0",
+			value: stats.agents,
 			icon: <FiUsers />
 		},
 		{
 			title: "Blogs",
-			value: "0",
+			value: stats.blogs,
 			icon: <FiFileText />
 		}
 	];
@@ -36,7 +87,7 @@ function AdminDashboard() {
 			</div>
 
 			<div className="mt-10 grid gap-6 md:grid-cols-3">
-				{stats.map((stat) => (
+				{statCards.map((stat) => (
 					<div
 						key={stat.title}
 						className="rounded-xl bg-white p-6 shadow-sm transition ease-in-out duration-500 hover:-translate-y-1 hover:shadow-lg"
@@ -48,7 +99,7 @@ function AdminDashboard() {
 								</p>
 
 								<p className="mt-2 text-3xl font-bold text-gray-900">
-									{stat.value}
+									{loading ? "..." : stat.value}
 								</p>
 							</div>
 

@@ -6,7 +6,7 @@ function AdminLayout() {
 		<div className="min-h-screen bg-gray-100">
 			<AdminSidebar />
 
-			<main className="lg:ml-64">
+			<main className="pt-16 lg:ml-64 lg:pt-0">
 				<Outlet />
 			</main>
 		</div>
